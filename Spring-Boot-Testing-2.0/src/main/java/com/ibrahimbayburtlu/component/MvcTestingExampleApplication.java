@@ -1,6 +1,6 @@
-package com.luv2code.component;
+package com.ibrahimbayburtlu.component;
 
-import com.luv2code.component.models.CollegeStudent;
+import com.ibrahimbayburtlu.component.models.CollegeStudent;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
