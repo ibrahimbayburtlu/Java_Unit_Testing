@@ -61,6 +61,25 @@ public class ApplicationExampleTest {
         assertNotEquals(0,studentGrades.addGradeResultsForSingleClass(student.getStudentGrades().getMathGradeResults()));
     }
 
+    @DisplayName("Is grade greater")
+    @Test
+    public void isGradeGreaterStudentGrades(){
+        assertTrue(studentGrades.isGradeGreater(90,70),"failure - should be true");
+    }
+
+
+    @DisplayName("Is grade greater false")
+    @Test
+    public void isGradeGreaterStudentGradesAssertFalse(){
+        assertFalse(studentGrades.isGradeGreater(89,92),"failure - should be false");
+    }
+
+    @DisplayName("Check null for student grades")
+    @Test
+    public void checkNullForStudentGrades(){
+        assertNotNull(studentGrades.checkNull(student.getStudentGrades().getMathGradeResults()),"object should not be null");
+    }
+
     @Test
     void basicTest(){
 
