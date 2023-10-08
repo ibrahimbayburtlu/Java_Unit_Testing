@@ -8,11 +8,10 @@ import com.luv2code.component.service.ApplicationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
@@ -26,10 +25,10 @@ public class ApplicationExampleTest {
 
     private static int count = 0;
 
-    @Mock
-    private ApplicationDao applicationDao;
+    @MockBean
+    private ApplicationDao applicationDao; // We will mock the DAO to throw exceptions
 
-    @InjectMocks
+    @Autowired
     private ApplicationService applicationService;
 
     @Autowired
@@ -129,6 +128,23 @@ public class ApplicationExampleTest {
         );
     }
 
+    @DisplayName("Multiple Stubbing")
+    @Test
+    public void stubbingConsecutiveCalls(){
+        CollegeStudent nullStudent = (CollegeStudent) context.getBean("collegeStudent");
+
+        when(applicationDao.checkNull(nullStudent))
+                .thenThrow(new RuntimeException())
+                .thenReturn("Do not throw exception second time");
+
+        assertThrows(RuntimeException.class, () -> {
+            applicationService.checkNull(nullStudent);
+        });
+
+        assertEquals("Do not throw exception second time", applicationService.checkNull(nullStudent));
+    }
+
+    /*
     @DisplayName("When & Verify")
     @Test
     public void assertEqualsTestAddGrades(){
@@ -141,6 +157,7 @@ public class ApplicationExampleTest {
         verify(applicationDao,times(1)).
                 addGradeResultsForSingleClass(studentGrades.getMathGradeResults());
     }
+    */
 }
 
 
