@@ -6,6 +6,8 @@ import com.ibrahimbayburtlu.component.models.StudentGrades;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -114,7 +116,6 @@ public class ApplicationExampleTest {
                         student.getStudentGrades().getMathGradeResults()))
         );
     }
-
     @Test
     void basicTest(){
 
