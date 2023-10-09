@@ -31,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class GradeBookControllerTest {
 
+    @Autowired
+    private MockMvc mockMvc;
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -55,6 +57,14 @@ public class GradeBookControllerTest {
         when(studentAndGradeServiceMock.getGradeBook()).thenReturn(collegeStudentList);
 
         assertIterableEquals(collegeStudentList, studentAndGradeServiceMock.getGradeBook());
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/"))
+                .andExpect(status().isOk()).andReturn();
+
+        ModelAndView mav = mvcResult.getModelAndView();
+
+        ModelAndViewAssert.assertViewName(mav, "index");
+
     }
 
 
