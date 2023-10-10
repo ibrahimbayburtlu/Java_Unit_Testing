@@ -104,11 +104,27 @@ public class StudentAndGradeService {
 
         if (gradeType.equals("math")){
             Optional<MathGrade> grade = mathGradesDao.findById(id);
-            if (!grade.isPresent()){
+            if (grade.isEmpty()){
                 return studentId;
             }
             studentId = grade.get().getStudentId();
             mathGradesDao.deleteById(id);
+        }
+        if (gradeType.equals("science")){
+            Optional<ScienceGrade> grade = scienceGradeDao.findById(id);
+            if (grade.isEmpty()){
+                return studentId;
+            }
+            studentId = grade.get().getStudentId();
+            scienceGradeDao.deleteById(id);
+        }
+        if (gradeType.equals("history")){
+            Optional<HistoryGrade> grade = historyGradeDao.findById(id);
+            if (grade.isEmpty()){
+                return studentId;
+            }
+            studentId = grade.get().getStudentId();
+            historyGradeDao.deleteById(id);
         }
         return studentId;
     }
