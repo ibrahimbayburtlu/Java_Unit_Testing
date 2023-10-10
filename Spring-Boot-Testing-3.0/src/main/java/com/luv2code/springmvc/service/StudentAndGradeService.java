@@ -59,6 +59,9 @@ public class StudentAndGradeService {
         Optional<CollegeStudent> student = studentDao.findById(id);
         if (student.isPresent()) {
             studentDao.deleteById(id);
+            mathGradesDao.deleteByStudentId(id);
+            scienceGradeDao.deleteByStudentId(id);
+            historyGradeDao.deleteByStudentId(id);
         }
     }
 
