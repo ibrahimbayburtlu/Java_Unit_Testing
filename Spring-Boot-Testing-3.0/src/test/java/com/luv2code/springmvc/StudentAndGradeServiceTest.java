@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestPropertySource;
@@ -46,15 +47,40 @@ public class StudentAndGradeServiceTest {
     @Autowired
     private JdbcTemplate jdbc;
 
+    @Value("${sql.script.create.student}")
+    private String sqlAddStudent;
+
+    @Value("${sql.script.create.math.student}")
+    private String sqlAddMathStudent;
+
+    @Value("${sql.script.create.science.student}")
+    private String sqlAddScienceStudent;
+
+    @Value("${sql.script.create.history.student}")
+    private String sqlAddHistoryStudent;
+
+    @Value("${sql.script.delete.student}")
+    private String sqlDeleteStudent;
+
+    @Value("${sql.script.delete.math.student}")
+    private String sqlDeleteMathStudent;
+
+    @Value("${sql.script.delete.science.student}")
+    private String sqlDeleteScienceStudent;
+
+    @Value("${sql.script.delete.history.student}")
+    private String sqlDeleteHistoryStudent;
+
+
     @BeforeEach
     public void setupDatabase(){
-        jdbc.execute("insert into student(id,firstname,lastname,email_address)" + "values (1,'Eric','Roby','eric.roby@luv2code_school.com')");
+        jdbc.execute(sqlAddStudent);
 
-        jdbc.execute("insert into math_grade(id,student_id,grade) values (1,1,100.0)");
+        jdbc.execute(sqlAddMathStudent);
 
-        jdbc.execute("insert into  science_grade(id,student_id,grade) values (1,1,100.00)");
+        jdbc.execute(sqlAddScienceStudent);
 
-        jdbc.execute("insert into history_grade(id,student_id,grade) values (1,1,100.00)");
+        jdbc.execute(sqlAddHistoryStudent);
     }
 
     @Test
@@ -171,9 +197,9 @@ public class StudentAndGradeServiceTest {
         assertEquals("Eric",gradebookCollegeStudent.getFirstname());
         assertEquals("Roby",gradebookCollegeStudent.getLastname());
         assertEquals("eric.roby@luv2code_school.com",gradebookCollegeStudent.getEmailAddress());
-        assertTrue(gradebookCollegeStudent.getStudentGrades().getMathGradeResults().size() == 1);
-        assertTrue(gradebookCollegeStudent.getStudentGrades().getScienceGradeResults().size() == 1);
-        assertTrue(gradebookCollegeStudent.getStudentGrades().getHistoryGradeResults().size() == 1);
+        assertEquals(1, gradebookCollegeStudent.getStudentGrades().getMathGradeResults().size());
+        assertEquals(1, gradebookCollegeStudent.getStudentGrades().getScienceGradeResults().size());
+        assertEquals(1, gradebookCollegeStudent.getStudentGrades().getHistoryGradeResults().size());
 
 
     }
@@ -188,13 +214,14 @@ public class StudentAndGradeServiceTest {
 
     @AfterEach
     public void setupAfterTransaction(){
-        jdbc.execute("DELETE From student");
+        jdbc.execute(sqlDeleteStudent);
 
-        jdbc.execute("DELETE  FROM math_grade");
+        jdbc.execute(sqlDeleteMathStudent);
 
-        jdbc.execute("DELETE FROM science_grade");
+        jdbc.execute(sqlDeleteScienceStudent);
 
-        jdbc.execute("DELETE FROM history_grade");
+        jdbc.execute(sqlDeleteHistoryStudent);
+
     }
 
 }
