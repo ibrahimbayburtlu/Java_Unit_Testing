@@ -178,6 +178,14 @@ public class StudentAndGradeServiceTest {
 
     }
 
+    @Test
+    public void studentInformationServiceReturnAll(){
+
+        GradebookCollegeStudent gradebookCollegeStudent = studentService.studentInformation(0);
+
+        assertNull(gradebookCollegeStudent);
+    }
+
     @AfterEach
     public void setupAfterTransaction(){
         jdbc.execute("DELETE From student");
