@@ -199,7 +199,7 @@ public class GradeBookControllerTest {
         assertEquals(1,student.getStudentGrades().getMathGradeResults().size());
 
     }
-    
+
     @AfterEach
     public void setupAfterTransaction(){
         jdbc.execute("DELETE From student");
