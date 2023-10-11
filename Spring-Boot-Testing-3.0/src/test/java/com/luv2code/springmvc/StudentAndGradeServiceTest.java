@@ -72,6 +72,7 @@ public class StudentAndGradeServiceTest {
     private String sqlDeleteHistoryStudent;
 
 
+
     @BeforeEach
     public void setupDatabase(){
         jdbc.execute(sqlAddStudent);
