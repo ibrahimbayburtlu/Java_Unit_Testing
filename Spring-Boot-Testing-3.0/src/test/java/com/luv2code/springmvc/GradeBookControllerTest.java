@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -138,6 +139,32 @@ public class GradeBookControllerTest {
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                 .get("/delete/student/{id}",0))
+                .andExpect(status().isOk()).andReturn();
+
+        ModelAndView mav = mvcResult.getModelAndView();
+
+        ModelAndViewAssert.assertViewName(mav,"error");
+    }
+
+    @Test
+    public void studentInformationHttpRequest() throws Exception{
+
+        assertTrue(studentDao.findById(1).isPresent());
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/studentInformation/{id}",1))
+                .andExpect(status().isOk()).andReturn();
+
+        ModelAndView mav = mvcResult.getModelAndView();
+
+        ModelAndViewAssert.assertViewName(mav,"studentInformation");
+    }
+
+    @Test
+    public void studentInformationHttpStudentDoesNotExistRequest() throws Exception{
+
+        assertTrue(studentDao.findById(1).isPresent());
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/studentInformation/{id}",0))
                 .andExpect(status().isOk()).andReturn();
 
         ModelAndView mav = mvcResult.getModelAndView();
